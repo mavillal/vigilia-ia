@@ -11,6 +11,7 @@ Plataforma de visión artificial en el borde (edge computing) para monitoreo de 
 - [`scripts/`](./scripts) — pipeline de entrenamiento y despliegue (data → train → eval → export → deploy → orquestador)
 - [`backend/`](./backend) — API local (FastAPI + SQLite) para el Panel de Detecciones, con autenticación por roles
 - [`frontend/`](./frontend) — Panel de Detecciones (dashboard web 100% local, HTML/CSS/JS sin build step)
+- [`integration/`](./integration) — integración de componentes: docker-compose, systemd, nginx y verificación automática de consistencia
 - [`docs/`](./docs) — documentación técnica del backend y descriptores de cada script
 
 ## Pipeline

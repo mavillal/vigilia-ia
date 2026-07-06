@@ -35,6 +35,8 @@ Si el backend corre en otra IP del nodo edge, definir antes de cargar los script
 <script>window.VIGILIA_API_BASE = "http://192.168.1.50:8000";</script>
 ```
 
+Cuando el dashboard se sirve integrado detrás de nginx (ver `../integration/`, puerto 80/443 sin puerto explícito en la URL), `js/api.js` detecta automáticamente que no hay override ni puerto de desarrollo, y usa `window.location.origin` — el backend queda expuesto en el mismo origen vía proxy, sin necesidad de configurar CORS. Ver `../integration/README.md`.
+
 ## Control de acceso por rol
 
 El token JWT recibido en `/auth/login` determina el rol (`operador` / `supervisor` / `gerencia`), guardado en `sessionStorage` (se limpia al cerrar la pestaña). El panel de indicadores agregados (`/resumen`) requiere rol `supervisor` o superior; si el backend responde 403, el dashboard lo indica sin bloquear el resto de la vista.

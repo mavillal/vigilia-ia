@@ -12,6 +12,15 @@ eventos en SQLite. 100% local, sin dependencia de internet/nube.
 Input : best.engine + fuente RTSP
 Output: BD SQLite + alertas (log / alerta según clase)
 
+Integración de componentes:
+  Este script tiene una única responsabilidad — inferencia y persistencia —
+  y NO expone ninguna API HTTP. La exposición de los eventos vía REST
+  (/detecciones, /alertas, /resumen) corre en un proceso independiente:
+  backend/main.py, que lee la misma base SQLite en modo solo-lectura. Ambos
+  procesos se orquestan juntos mediante integration/ (docker-compose o
+  unidades systemd), lo que evita acoplar el ciclo de vida del motor de
+  inferencia al de la API y elimina cualquier duplicación de endpoints.
+
 Lógica de alertas (Anexo B, Figura B.2):
   mineral_normal -> log        (sin riesgo)
   roca_oversize  -> alerta     (riesgo)
@@ -78,9 +87,6 @@ def parse_args():
     p.add_argument("--device", default="0")
     p.add_argument("--gpio", action="store_true", help="Habilitar salida GPIO en Jetson Orin para alertas sonoras/lumínicas")
     p.add_argument("--max_frames", type=int, default=None, help="Límite de frames a procesar (default: sin límite, corre continuo)")
-    p.add_argument("--api_host", default="0.0.0.0")
-    p.add_argument("--api_port", type=int, default=8000)
-    p.add_argument("--no_api", action="store_true", help="Correr solo el loop de inferencia, sin exponer la API FastAPI")
     return p.parse_args()
 
 
@@ -194,38 +200,6 @@ def run_inference_loop(model, source, conn, thresholds, gpio_ctx, gpio_enabled, 
         cap.release()
 
 
-def build_api(conn):
-    """Expone la BD de eventos vía FastAPI para el Panel de Detecciones (dashboard web local)."""
-    try:
-        from fastapi import FastAPI
-    except ImportError:
-        log.warning("FastAPI no disponible; se omite la exposición de la API (usar --no_api para silenciar este aviso).")
-        return None
-
-    app = FastAPI(title="VIGIL-IA Inference API", version="25INI-282394")
-
-    @app.get("/eventos")
-    def get_eventos(limit: int = 50):
-        cur = conn.execute(
-            "SELECT id, frame_id, clase, confianza, nivel_riesgo, accion, timestamp "
-            "FROM eventos ORDER BY id DESC LIMIT ?",
-            (limit,),
-        )
-        cols = [d[0] for d in cur.description]
-        return [dict(zip(cols, row)) for row in cur.fetchall()]
-
-    @app.get("/eventos/resumen")
-    def get_resumen():
-        cur = conn.execute("SELECT clase, COUNT(*) FROM eventos GROUP BY clase")
-        return {clase: count for clase, count in cur.fetchall()}
-
-    @app.get("/health")
-    def health():
-        return {"status": "ok", "proyecto": "VIGIL-IA", "modo": "100% local"}
-
-    return app
-
-
 def main():
     args = parse_args()
     model_path = Path(args.model)
@@ -255,11 +229,6 @@ def main():
     gpio_ctx = (None, None)
     if args.gpio:
         gpio_ctx = setup_gpio()
-
-    app = None if args.no_api else build_api(conn)
-    if app is not None:
-        log.info(f"API FastAPI disponible en http://{args.api_host}:{args.api_port} (para el Panel de Detecciones)")
-        log.info("Nota: correr la API en un proceso/uvicorn separado si se requiere servir concurrente al loop de inferencia.")
 
     run_inference_loop(
         model=model,

@@ -1,0 +1,38 @@
+# integration/docker-compose.yml
+# VIGIL-IA · CORFO Semilla Inicia 25INI-282394
+#
+# Integra backend (API) y frontend (Panel de Detecciones) como un único
+# stack. El motor de inferencia (scripts/04_deploy_inference.py) corre
+# deliberadamente FUERA de este stack, como proceso nativo en el host con
+# acceso directo a la GPU/TensorRT de Jetson Orin (ver systemd/), y comparte
+# con el backend la misma base SQLite montada como volumen.
+#
+# Uso:
+#   cd integration/
+#   cp .env.example .env   # ajustar valores
+#   docker compose up -d --build
+
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../integration/backend.Dockerfile
+    env_file: .env
+    environment:
+      - VIGILIA_DB_PATH=/data/vigilia_events.db
+    volumes:
+      - ../data:/data
+    expose:
+      - "8000"
+    restart: unless-stopped
+
+  frontend:
+    image: nginx:1.27-alpine
+    volumes:
+      - ../frontend:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "${VIGILIA_FRONTEND_PORT:-80}:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

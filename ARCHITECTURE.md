@@ -49,6 +49,10 @@ vigilia-ia/
 │   ├── 04_deploy_inference.py       # DEPLOY    — motor de inferencia en Jetson Orin
 │   └── 05_run_pipeline.py           # ORQUESTADOR — pipeline end-to-end
 │
+├── backend/                         # API local (FastAPI + SQLite), auth por roles
+├── frontend/                        # Panel de Detecciones (HTML/CSS/JS, sin build step)
+├── integration/                     # docker-compose, systemd, nginx, chequeo de consistencia
+│
 ├── runs/
 │   ├── train/<run_name>/weights/{best.pt,last.pt}
 │   ├── eval/eval_report.json
@@ -103,7 +107,7 @@ Calcula mAP@0.5 / precisión / recall por clase y mide FPS real sobre el hardwar
 Convierte `best.pt` a TensorRT FP16 (`best.engine`, formato de producción en Jetson Orin) y a ONNX (portabilidad). Genera `model_card.json` con trazabilidad completa: clases, umbrales de confianza, hardware objetivo y métricas de `02_evaluate.py`.
 
 ### 4.5 `04_deploy_inference.py` — DEPLOY
-Motor de inferencia 100% local que corre en el Jetson Orin: consume el stream RTSP, aplica umbrales de confianza diferenciados por clase (`mineral_normal`=0,50 · `roca_oversize`=0,40 · `metal_grande`=0,30), persiste eventos en SQLite, dispara alertas GPIO opcionales y expone una API FastAPI para el dashboard.
+Motor de inferencia 100% local que corre en el Jetson Orin: consume el stream RTSP, aplica umbrales de confianza diferenciados por clase (`mineral_normal`=0,50 · `roca_oversize`=0,40 · `metal_grande`=0,30), persiste eventos en SQLite y dispara alertas GPIO opcionales. **No expone ninguna API propia** — esa responsabilidad es exclusiva de `backend/`, y ambos procesos se orquestan juntos vía `integration/` (ver sección 8).
 
 ### 4.6 `05_run_pipeline.py` — ORQUESTADOR
 Encadena las cinco etapas anteriores como subprocesos independientes, propagando artefactos entre ellas (`vigilia_dataset.yaml` → `best.pt` → `eval_report.json` → `best.engine`). Soporta `--skip_deploy` para correr data→export en cualquier entorno con GPU, reservando DEPLOY para el hardware Jetson Orin en terreno.
@@ -140,3 +144,14 @@ El umbral reducido en `metal_grande` es una decisión deliberada de diseño: pri
 3. **Fallar rápido y con contexto:** validaciones explícitas de datos e integridad antes de invertir cómputo en entrenamiento.
 4. **Degradación segura:** componentes opcionales (GPIO, API) no interrumpen el motor de inferencia si no están disponibles en el entorno.
 5. **Separación de entornos:** el ciclo de entrenamiento/validación (GPU de desarrollo) es independiente del ciclo de inferencia en producción (Jetson Orin en terreno), reflejado en la bandera `--skip_deploy`.
+
+---
+
+## 8. Integración de componentes
+
+El motor de inferencia, el backend y el frontend son tres procesos independientes que se integran mediante `integration/`:
+
+- **Sin API duplicada:** el motor de inferencia solo escribe en SQLite; el backend es la única fuente de la API REST.
+- **Mismo origen, sin CORS:** `integration/nginx.conf` sirve el frontend y expone el backend bajo el mismo host:puerto.
+- **Dos rutas de despliegue:** `docker-compose.yml` (backend + frontend) o unidades `systemd` nativas para los tres procesos, según disponibilidad de Docker en el nodo edge.
+- **Verificación automática:** `integration/run_integration_check.py` compara vía AST las constantes de negocio (`CLASS_MAP`, `RISK_LEVEL`, `ALERT_ACTION`, umbrales) entre `scripts/04_deploy_inference.py` y `backend/constants.py`, evitando que ambos componentes diverjan silenciosamente.

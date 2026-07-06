@@ -1,0 +1,28 @@
+# integration/systemd/vigilia-backend.service
+# VIGIL-IA · CORFO Semilla Inicia 25INI-282394
+#
+# Alternativa nativa (sin Docker) para correr backend/main.py directamente
+# en el Jetson Orin. Usar esta unidad + vigilia-inference.service cuando no
+# se quiera depender de Docker en el nodo edge; usar docker-compose.yml
+# cuando sí se disponga de Docker (ej. para demos o entornos de staging).
+#
+# Instalación:
+#   sudo cp vigilia-backend.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now vigilia-backend.service
+
+[Unit]
+Description=VIGIL-IA - Backend API (FastAPI + SQLite)
+After=network.target
+
+[Service]
+Type=simple
+User=vigilia
+WorkingDirectory=/opt/vigilia-ia/backend
+EnvironmentFile=/opt/vigilia-ia/integration/.env
+ExecStart=/usr/bin/python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
