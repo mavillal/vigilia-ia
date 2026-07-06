@@ -1,0 +1,87 @@
+/* ==========================================================================
+   tokens.css — VIGIL-IA · CORFO Semilla Inicia 25INI-282394
+   Sistema de diseño del Panel de Detecciones (dashboard web 100% local).
+
+   IMPORTANTE — Operación sin internet:
+   El nodo Jetson Orin opera sin conectividad en Copper Phoenix I. Las
+   tipografías de marca (Barlow Condensed, DM Sans, IBM Plex Mono) deben
+   auto-alojarse como archivos .woff2 en assets/fonts/ antes del despliegue
+   en terreno — NO usar Google Fonts ni ningún CDN externo. Mientras esos
+   archivos no estén presentes, el sistema usa las pilas de fallback locales
+   definidas abajo, que se ven correctamente en cualquier navegador sin
+   requerir descarga alguna.
+   ========================================================================== */
+
+:root {
+  /* Paleta de marca */
+  --color-negro-vigil: #1A1A18;
+  --color-verde-ia: #2E7D72;
+  --color-beige: #F5F3EE;
+  --color-gris: #8A8A82;
+
+  /* Superficies derivadas */
+  --color-negro-suave: #26261F;
+  --color-beige-suave: #EFEBE2;
+  --color-borde: #D8D4C8;
+
+  /* Semántica de riesgo (Anexo B, Figura B.2) — no son colores de marca,
+     son códigos operativos: deben leerse en menos de 3 segundos. */
+  --color-riesgo-sin: #2E7D72;   /* mineral_normal -> log, sin riesgo */
+  --color-riesgo-medio: #C7821E; /* roca_oversize  -> alerta, riesgo */
+  --color-riesgo-alto: #B23A2E;  /* metal_grande   -> alerta, daño */
+
+  --color-riesgo-sin-bg: #E6F0EE;
+  --color-riesgo-medio-bg: #FBF0E0;
+  --color-riesgo-alto-bg: #F8E4E1;
+
+  /* Tipografía — pilas con fallback local, sin dependencia de internet */
+  --font-display: "Barlow Condensed", "Oswald", "Arial Narrow", sans-serif;
+  --font-body: "DM Sans", -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* Escala tipográfica */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.5rem;
+
+  /* Espaciado */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Layout */
+  --radius: 6px;
+  --shadow-card: 0 1px 2px rgba(26, 26, 24, 0.08), 0 1px 1px rgba(26, 26, 24, 0.04);
+  --nav-width: 220px;
+  --alerts-width: 320px;
+}
+
+/* Fuentes de marca — activar cuando los archivos .woff2 estén disponibles
+   localmente en assets/fonts/. Ver README.md del frontend. */
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("../assets/fonts/BarlowCondensed-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("../assets/fonts/DMSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../assets/fonts/IBMPlexMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}

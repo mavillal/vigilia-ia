@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VIGIL-IA · Panel de Detecciones</title>
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- Columna 1: navegación -->
+    <nav class="nav-col">
+      <div class="brand-mark">VIGIL-IA</div>
+      <div class="brand-sub">Copper Phoenix I</div>
+
+      <ul class="nav-list">
+        <li><button class="active" type="button">Detecciones</button></li>
+        <li><button id="nav-config" type="button" data-locked="false">Configuración de acceso</button></li>
+      </ul>
+
+      <div class="user-badge">
+        <span>Sesión activa</span>
+        <span class="rol mono" id="user-rol">—</span>
+      </div>
+      <button id="logout-btn" class="logout-link" type="button">Cerrar sesión</button>
+
+      <div class="system-status" style="margin-top: var(--space-5);">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-label">Verificando estado...</span>
+      </div>
+    </nav>
+
+    <!-- Columna 2: feed central -->
+    <main class="main-col">
+      <div id="kpi-row" class="kpi-row"></div>
+
+      <div class="feed-header">
+        <h2>Detecciones recientes</h2>
+        <div class="filters">
+          <button class="filter-chip active" type="button" data-clase="">Todas</button>
+          <button class="filter-chip" type="button" data-clase="mineral_normal">Mineral normal</button>
+          <button class="filter-chip" type="button" data-clase="roca_oversize">Roca oversize</button>
+          <button class="filter-chip" type="button" data-clase="metal_grande">Metal grande</button>
+        </div>
+      </div>
+
+      <table class="events-table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Clase</th>
+            <th>Confianza</th>
+            <th>Riesgo</th>
+            <th>Frame</th>
+          </tr>
+        </thead>
+        <tbody id="events-tbody"></tbody>
+      </table>
+      <div id="events-empty" class="empty-state" style="display:none;">
+        Sin detecciones registradas todavía.
+      </div>
+    </main>
+
+    <!-- Columna 3: alertas -->
+    <aside class="alerts-col">
+      <h2>Alertas</h2>
+      <div id="critical-banner" class="critical-banner" style="display:none;"></div>
+      <div id="alerts-list"></div>
+    </aside>
+
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
