@@ -25,6 +25,9 @@ Se implementaron dos rutas de despliegue equivalentes: (a) mediante contenedores
 
 **Evidencias:**
 
-- Diagrama de integración end-to-end — 3 zonas funcionales (Anexo B)
+- Diagrama de integración end-to-end — 3 zonas funcionales (Anexo B):
+
+  ![Anexo B — Diagrama de integración end-to-end](./assets/VIGIL-IA_Anexo_B_Diagrama_Integracion.png)
+
 - Repositorio del proyecto, directorio `integration/` (`docker-compose.yml`, `nginx.conf`, `systemd/`, `run_integration_check.py`)
 - Salida de ejecución de `integration/run_integration_check.py` confirmando consistencia entre componentes
