@@ -30,5 +30,5 @@ Las tres pruebas pueden ejecutarse en conjunto mediante `tests/run_validation_su
 **Evidencias:**
 
 - Repositorio del proyecto, directorio `tests/` (`run_validation_suite.py`, `test_01_inferencia_modelos.py`, `test_02_gestion_alertas.py`, `test_03_interfaz_operador_checklist.md`, `test_03_smoke_test.py`)
-- `tests/validation_report.json` — reporte consolidado de resultados por prueba
+- `tests/evidence/validation_report_2026-07-07.json` — reporte consolidado de una ejecución real de la suite (Prueba 1 "Omitido" por no contar aún con un checkpoint entrenado en este entorno; Pruebas 2 y 3 "Cumplido")
 - Checklist de interpretabilidad completado por personal técnico (evidencia física/firmada, ver `test_03_interfaz_operador_checklist.md`)

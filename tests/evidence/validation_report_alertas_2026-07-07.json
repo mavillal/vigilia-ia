@@ -1,0 +1,30 @@
+{
+  "prueba": "Gestión de Alertas (Lógica de Negocio)",
+  "objetivo": "Validar la activación de alertas según umbrales",
+  "metodo": "Inyección de eventos sintéticos por clase y verificación de cambio de estado",
+  "eventos_inyectados": [
+    {
+      "frame_id": 0,
+      "clase": "mineral_normal",
+      "confianza": 0.55,
+      "nivel_riesgo": "sin_riesgo",
+      "accion": "log"
+    },
+    {
+      "frame_id": 1,
+      "clase": "roca_oversize",
+      "confianza": 0.45,
+      "nivel_riesgo": "riesgo",
+      "accion": "alerta"
+    },
+    {
+      "frame_id": 2,
+      "clase": "metal_grande",
+      "confianza": 0.35,
+      "nivel_riesgo": "daño",
+      "accion": "alerta"
+    }
+  ],
+  "fallas": [],
+  "resultado": "Cumplido"
+}
