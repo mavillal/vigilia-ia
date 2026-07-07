@@ -8,6 +8,7 @@ Plataforma de visión artificial en el borde (edge computing) para monitoreo de 
 ## Contenido del repositorio
 
 - [`ARCHITECTURE.md`](./ARCHITECTURE.md) — arquitectura completa del sistema, estructura de carpetas y diagrama de flujo end-to-end
+- [`data/DATASET_SPEC.md`](./data/DATASET_SPEC.md) — especificación canónica del dataset (Anexo C), con manifiesto machine-readable y validador automático
 - [`scripts/`](./scripts) — pipeline de entrenamiento y despliegue (data → train → eval → export → deploy → orquestador)
 - [`backend/`](./backend) — API local (FastAPI + SQLite) para el Panel de Detecciones, con autenticación por roles
 - [`frontend/`](./frontend) — Panel de Detecciones (dashboard web 100% local, HTML/CSS/JS sin build step)
