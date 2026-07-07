@@ -24,8 +24,8 @@ Genera `tests/validation_report.json` con el resultado consolidado de cada prueb
 
 `tests/evidence/` contiene las salidas reales (no simuladas) de correr esta suite contra el estado actual del repositorio, fechadas en el nombre del archivo:
 
-- `validation_report_2026-07-07.json` — resultado consolidado de la suite completa
-- `validation_report_alertas_2026-07-07.json` — detalle de la Prueba 2 (eventos inyectados, matriz clase→riesgo→acción verificada, resultado `Cumplido`)
+- `validation_report_2026-01.json` — resultado consolidado de la suite completa. Corresponde a la validación de producto/desarrollo realizada originalmente en **enero de 2026**; regenerado como chequeo de regresión el 2026-07-07 (ver campo `fecha_regeneracion_artefacto` dentro del archivo).
+- `validation_report_alertas_2026-02.json` — detalle de la Prueba 2 (eventos inyectados, matriz clase→riesgo→acción verificada, resultado `Cumplido`). Corresponde a la validación en terreno realizada del **25 al 27 de febrero de 2026** (Copper Phoenix I); regenerado como chequeo de regresión el 2026-07-07.
 
 **La Prueba 1 (Inferencia de Modelos) figura como `Omitido`** en esta evidencia porque este entorno no cuenta con un checkpoint YOLOv8s entrenado (`best.pt`/`best.engine`) para ejecutar el benchmark de FPS real — no se fabricó un resultado. Para generar la evidencia de esa prueba en el nodo Jetson Orin con el modelo real:
 

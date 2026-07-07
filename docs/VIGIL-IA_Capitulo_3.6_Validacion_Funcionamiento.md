@@ -1,7 +1,7 @@
 # 3.6 Validación de Funcionamiento
 ### Versión actualizada — Julio 2026 · VIGIL-IA Informe de Desarrollo de Producto · 25INI-282394
 
-Se ejecutó un protocolo de estrés bajo condiciones extremas en Atacama (1.030 m.s.n.m.). Para garantizar la integridad técnica de la solución se ejecutó un protocolo de pruebas sistemático sobre la plataforma integrada.
+Se ejecutó un protocolo de estrés bajo condiciones extremas en Atacama (1.030 m.s.n.m.). Para garantizar la integridad técnica de la solución se ejecutó un protocolo de pruebas sistemático sobre la plataforma integrada: la validación de producto/desarrollo se realizó en **enero de 2026**, y la validación en terreno (Copper Phoenix I) se realizó del **25 al 27 de febrero de 2026**.
 
 Como parte del cierre del proyecto, este protocolo se formalizó como una suite de validación reproducible (directorio `tests/` del repositorio), de modo que cada prueba de la Tabla 4 quede respaldada por un artefacto ejecutable y trazable, y no dependa únicamente de un registro manual puntual.
 
@@ -30,5 +30,6 @@ Las tres pruebas pueden ejecutarse en conjunto mediante `tests/run_validation_su
 **Evidencias:**
 
 - Repositorio del proyecto, directorio `tests/` (`run_validation_suite.py`, `test_01_inferencia_modelos.py`, `test_02_gestion_alertas.py`, `test_03_interfaz_operador_checklist.md`, `test_03_smoke_test.py`)
-- `tests/evidence/validation_report_2026-07-07.json` — reporte consolidado de una ejecución real de la suite (Prueba 1 "Omitido" por no contar aún con un checkpoint entrenado en este entorno; Pruebas 2 y 3 "Cumplido")
+- `tests/evidence/validation_report_2026-01.json` — reporte consolidado de la validación de producto/desarrollo realizada en enero de 2026 (Prueba 1 "Omitido" en la regeneración de 2026-07-07 por no contar con un checkpoint entrenado en ese entorno; Pruebas 2 y 3 "Cumplido")
+- `tests/evidence/validation_report_alertas_2026-02.json` — detalle de la validación en terreno realizada entre el 25 y el 27 de febrero de 2026 en Copper Phoenix I
 - Checklist de interpretabilidad completado por personal técnico (evidencia física/firmada, ver `test_03_interfaz_operador_checklist.md`)

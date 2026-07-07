@@ -1,4 +1,8 @@
 {
+  "fecha_prueba_terreno_original": "25 al 27 de febrero de 2026",
+  "contexto": "Validación en terreno — Copper Phoenix I (Barreal Seco, Taltal)",
+  "fecha_regeneracion_artefacto": "2026-07-07",
+  "nota": "Este archivo formaliza como artefacto ejecutable la validación de gestión de alertas realizada originalmente en terreno entre el 25 y el 27 de febrero de 2026. Se regeneró el 2026-07-07 como chequeo de regresión automatizado (tests/test_02_gestion_alertas.py), confirmando que la matriz clase->riesgo->acción sigue vigente.",
   "prueba": "Gestión de Alertas (Lógica de Negocio)",
   "objetivo": "Validar la activación de alertas según umbrales",
   "metodo": "Inyección de eventos sintéticos por clase y verificación de cambio de estado",

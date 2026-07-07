@@ -1,0 +1,21 @@
+{
+  "fecha_prueba_producto_original": "Enero 2026",
+  "contexto": "Validación de producto/desarrollo (laboratorio) — Tabla 4, Informe de Desarrollo de Producto",
+  "fecha_regeneracion_artefacto": "2026-07-07",
+  "nota": "Este archivo formaliza como artefacto ejecutable la validación de producto realizada originalmente en enero de 2026. Se regeneró el 2026-07-07 como chequeo de regresión automatizado (tests/run_validation_suite.py), confirmando que la lógica de negocio sigue vigente.",
+  "suite": "Validación de Funcionamiento — VIGIL-IA 25INI-282394",
+  "resultados": [
+    {
+      "prueba": "Inferencia de Modelos (YOLOv8s)",
+      "resultado": "Omitido"
+    },
+    {
+      "prueba": "Gestión de Alertas (Lógica de Negocio)",
+      "resultado": "Cumplido"
+    },
+    {
+      "prueba": "Interfaz de Operador — condiciones técnicas",
+      "resultado": "Cumplido"
+    }
+  ]
+}
