@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Datos y modelos generados localmente (no versionar)
+data/
+runs/
+
+# Entorno
+.env
+
+# Sistema
+.DS_Store
