@@ -6,7 +6,9 @@ __pycache__/
 venv/
 
 # Datos y modelos generados localmente (no versionar)
-data/
+data/*
+!data/DATASET_SPEC.md
+!data/dataset_manifest.json
 runs/
 
 # Entorno

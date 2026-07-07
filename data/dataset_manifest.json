@@ -1,0 +1,58 @@
+{
+  "_fuente": "Anexo C — Composición y Etiquetado (Figuras C.1, C.2, C.3). Ver ../data/DATASET_SPEC.md",
+  "proyecto": "VIGIL-IA",
+  "codigo_corfo": "25INI-282394",
+  "sitio_piloto": "Copper Phoenix I",
+  "resolucion_px": "3840x2160",
+  "formato_anotacion": "YOLOv8 TXT",
+  "split_train_val": [0.8, 0.2],
+  "confianza_entrenamiento_nms": 0.001,
+  "clases": {
+    "mineral_normal": {
+      "class_id": 0,
+      "nivel_riesgo": "sin_riesgo",
+      "total_imgs": 760,
+      "sinteticas": 480,
+      "nativas": 280,
+      "porcentaje_dataset": 44.2,
+      "precision_pct": 91,
+      "recall_pct": 88,
+      "umbral_confianza_deploy": 0.50
+    },
+    "roca_oversize": {
+      "class_id": 1,
+      "nivel_riesgo": "riesgo",
+      "total_imgs": 560,
+      "sinteticas": 420,
+      "nativas": 140,
+      "porcentaje_dataset": 32.6,
+      "precision_pct": 74,
+      "recall_pct": 71,
+      "umbral_confianza_deploy": 0.40
+    },
+    "metal_grande": {
+      "class_id": 2,
+      "nivel_riesgo": "daño",
+      "total_imgs": 400,
+      "sinteticas": 300,
+      "nativas": 100,
+      "porcentaje_dataset": 23.3,
+      "precision_pct": 61,
+      "recall_pct": 58,
+      "umbral_confianza_deploy": 0.30
+    }
+  },
+  "totales": {
+    "total_imgs": 1720,
+    "sinteticas": 1200,
+    "nativas": 520,
+    "map50_global": 0.67
+  },
+  "map50_verificado_anexo_d3": {
+    "mineral_normal": 0.743,
+    "roca_oversize": 0.672,
+    "metal_grande": 0.490,
+    "global": 0.67,
+    "nota": "El cuerpo de algunos informes etiqueta la Precisión (91/74/61%) como si fuera mAP. Este es el mAP@0.5 real, verificado en Anexo D.3."
+  }
+}
